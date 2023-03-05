@@ -1,9 +1,8 @@
 global using Commerce.Shared;
 global using Microsoft.EntityFrameworkCore;
 global using Commerce.Server.Data;
+global using Commerce.Server.Services.CategoryService;
 global using Commerce.Server.Services.ProductService;
-
-using Microsoft.AspNetCore.ResponseCompression;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +20,7 @@ builder.Services.AddSwaggerGen();
 
 
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 var app = builder.Build();
 app.UseSwaggerUI();
