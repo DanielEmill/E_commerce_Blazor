@@ -7,16 +7,22 @@ namespace Commerce.Server.Controllers
 	[ApiController]
 	public class ProductController : ControllerBase
 	{
-        private readonly DataContext _contexto;
-        public ProductController(DataContext context)
+        private readonly IProductService _productService;
+        public ProductController(IProductService productService)
         {
-            _contexto = context;
+            _productService = productService;
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Product>>> GetProduct(){
-            var products = await _contexto.Products.ToListAsync();
-            return Ok(products);
+        public async Task<ActionResult<ServiceResponse<List<Product>>>> GetProducts(){
+            var result = await _productService.GetProductsAsync();
+            return Ok(result);
         }
+        [HttpGet("{productid}")]
+        public async Task<ActionResult<ServiceResponse<Product>>> GetProduct(int productId){
+            var result = await _productService.GetProductsAsync(productId);
+            return Ok(result);
+        }
+        
     }
 }
